@@ -75,7 +75,7 @@ namespace EditorHtml
         {
             switch (option)
             {
-                case 1: Console.WriteLine("Editor"); break;
+                case 1: Editor.Show(); break;
                 case 2: Console.WriteLine("Abrir"); break;
                 case 0:
                     { // Abre corchetes porque essa parte tem mais de uma linha.
