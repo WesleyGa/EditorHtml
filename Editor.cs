@@ -30,13 +30,17 @@ namespace EditorHtml
                 file.Append(Console.ReadLine());
                 file.Append(Environment.NewLine);
             } while (Console.ReadKey().Key != ConsoleKey.Escape);
+
             Console.WriteLine(" Deseja salvar este arquivo?");
+            Viewer.Show(file.ToString());
             Console.WriteLine("Sim ou não?");
             string option = Console.ReadLine().Trim(); // Trim: Ignora espaços antes e depois da frase.
 
-            if (option.Equals("Sim", StringComparison.OrdinalIgnoreCase)) //Ignora a diferença entre letras maiúsculas e minúsculas
+            if (option.Equals("Sim", StringComparison.OrdinalIgnoreCase))//Ignora a diferença entre letras maiúsculas e minúsculas
                 Salvar(file.ToString()); // Converte StringBuilder para string antes de salvar.
 
+            if (option.Equals("Não", StringComparison.OrdinalIgnoreCase))
+                Menu.Show();
 
 
         }
