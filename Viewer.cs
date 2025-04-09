@@ -25,7 +25,7 @@ namespace EditorHtml
         {
             // Cria um objeto Regex (expressão regular) que vai encontrar qualquer texto que esteja dentro de uma 
             // tag <strong>...</strong>.
-            var strong = new Regex(@"<\s*strong[^>]*>(.*?)<\s*/\s*strong>");
+            var tags = new Regex(@"<\s*(strong|p|h1|title)[^>]*>(.*?)<\s*/\s*\1>", RegexOptions.Singleline); //O \1 significa: feche com a mesma tag que abriu.
 
             // 'words' recebe um array de strings (string[]), ou seja, uma lista de palavras separadas com base nos espaços em branco.
             //  A ideia aqui é apenas para fins de aprendizado, não visando performance.
@@ -33,7 +33,7 @@ namespace EditorHtml
 
             for (var i = 0; i < words.Length; i++) // Loop por todas as palavras separadas.
             {
-                if (strong.IsMatch(words[i])) // Se a palavra atual (words[i]) contém uma tag <strong>.
+                if (tags.IsMatch(words[i])) // Se a palavra atual (words[i]) contém uma tag <strong>.
                 {
                     Console.ForegroundColor = ConsoleColor.Blue; // Muda a cor do texto no console para azul.
                     Console.Write(
@@ -45,7 +45,7 @@ namespace EditorHtml
                             )
                         )
                     );
-                    Console.WriteLine(" ");
+                    Console.Write(" ");
                 }
                 else
                 {
@@ -55,6 +55,7 @@ namespace EditorHtml
                 }
             }
         }
+
 
     }
 }
