@@ -25,32 +25,33 @@ namespace EditorHtml
         {
             // Cria um objeto Regex (expressão regular) que vai encontrar qualquer texto que esteja dentro de uma 
             // tag <strong>...</strong>.
-            var tags = new Regex(@"<\s*(strong|p|h1|title)[^>]*>(.*?)<\s*/\s*\1>", RegexOptions.Singleline); //O \1 significa: feche com a mesma tag que abriu.
+            var tags = new Regex(@"<\s*(h1|strong|p|li)[^>]*>(.*?)<\s*/\s*\1>", RegexOptions.Singleline); //O \1 significa: feche com a mesma tag que abriu.
 
             // 'words' recebe um array de strings (string[]), ou seja, uma lista de palavras separadas com base nos espaços em branco.
             //  A ideia aqui é apenas para fins de aprendizado, não visando performance.
-            var words = text.Split(' '); // Divide a string text em várias palavras, separadas por espaços.
+            var words = tags.Matches(text); // Divide a string text em várias palavras, separadas por espaços.
 
-            for (var i = 0; i < words.Length; i++) // Loop por todas as palavras separadas.
+            foreach (Match match1 in words) // Loop por todas as palavras separadas.
             {
-                if (tags.IsMatch(words[i])) // Se a palavra atual (words[i]) contém uma tag <strong>.
+                if (tags.IsMatch(match1.Value)) // Se a palavra atual (words[i]) contém uma tag <strong>.
                 {
-                    Console.ForegroundColor = ConsoleColor.Blue; // Muda a cor do texto no console para azul.
-                    Console.Write(
-                        words[i].Substring(
-                            words[i].IndexOf('>') + 1, // encontra o > da primeira tag (<strong>), que está na posição 7.
-                            (
-                             (words[i].LastIndexOf('<') - 1) -
-                             words[i].IndexOf('>')
-                            )
-                        )
-                    );
-                    Console.Write(" ");
+                    var type = match1.Groups[1].Value;
+                    switch (type)
+                    {
+                        case "strong": Console.ForegroundColor = ConsoleColor.Red; break;
+                        case "h1": Console.ForegroundColor = ConsoleColor.Cyan; break;
+                        case "title": Console.ForegroundColor = ConsoleColor.DarkRed; break;
+                        case "p": Console.ForegroundColor = ConsoleColor.Yellow; break;
+                        case "li":
+                            Console.ForegroundColor = ConsoleColor.Green; break;
+                    }
+
+                    Console.WriteLine(match1.Groups[2].Value);
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write(words[i]);
+                    Console.Write(match1.Value);
                     Console.Write(" ");
                 }
             }

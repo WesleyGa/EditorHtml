@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 
 
 namespace EditorHtml
@@ -20,12 +21,13 @@ namespace EditorHtml
             Reader(path);
             Console.WriteLine("------------");
             Console.ReadKey();
+            Menu.Show();
 
 
         }
         public static void Reader(string path)
         {
-            using (var file = new StreamReader(path))
+            using (var file = new StreamReader(path, Encoding.UTF8))
             {
                 string content = file.ReadToEnd();
                 Viewer.Replace(content);

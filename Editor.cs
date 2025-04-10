@@ -31,15 +31,15 @@ namespace EditorHtml
                 file.Append(Environment.NewLine);
             } while (Console.ReadKey().Key != ConsoleKey.Escape);
 
-            Console.WriteLine(" Deseja salvar este arquivo?");
             Viewer.Show(file.ToString());
-            Console.WriteLine("Sim ou não?");
-            string option = Console.ReadLine().Trim(); // Trim: Ignora espaços antes e depois da frase.
 
-            if (option.Equals("Sim", StringComparison.OrdinalIgnoreCase))//Ignora a diferença entre letras maiúsculas e minúsculas
+            Console.WriteLine("Deseja salvar este arquivo? Sim ou não:");
+            string option = Console.ReadLine().Trim().ToLower(); ; // Trim: Ignora espaços antes e depois da frase.
+
+            if (option.Equals("sim"))
                 Salvar(file.ToString()); // Converte StringBuilder para string antes de salvar.
 
-            if (option.Equals("Não", StringComparison.OrdinalIgnoreCase))
+            if (option != "sim")
                 Menu.Show();
 
 
@@ -49,7 +49,7 @@ namespace EditorHtml
         {
 
             Console.WriteLine("Em qual endereço deseja salvar:");
-            var path = Console.ReadLine();
+            string path = Console.ReadLine();
             using (var file = new StreamWriter(path))
             {
                 file.Write(text);
